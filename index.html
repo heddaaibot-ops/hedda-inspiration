@@ -1,0 +1,1357 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Hedda 靈感庫</title>
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📚</text></svg>">
+    <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-card: #1a1a25;
+            --bg-card-hover: #22222f;
+            --accent-blue: #6366f1;
+            --accent-purple: #a855f7;
+            --accent-pink: #ec4899;
+            --accent-cyan: #22d3ee;
+            --accent-green: #10b981;
+            --accent-yellow: #fbbf24;
+            --accent-orange: #f97316;
+            --text-primary: #ffffff;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --border-color: rgba(255,255,255,0.08);
+            --glass: rgba(255,255,255,0.03);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+            background: var(--bg-primary);
+            min-height: 100vh;
+            min-height: -webkit-fill-available;
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+
+        /* 背景動態效果 */
+        .bg-gradient {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(ellipse at 20% 20%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(168, 85, 247, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(236, 72, 153, 0.05) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 0 16px;
+            padding-bottom: 100px;
+        }
+
+        /* Header */
+        header {
+            padding: 60px 0 30px 0;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 48px;
+            margin-bottom: 12px;
+            filter: drop-shadow(0 0 20px rgba(99, 102, 241, 0.5));
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 14px;
+            letter-spacing: 2px;
+        }
+
+        /* 搜尋框 */
+        .search-box {
+            position: relative;
+            margin-bottom: 24px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 16px 20px 16px 50px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            color: var(--text-primary);
+            font-size: 15px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .search-box input:focus {
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .search-box::before {
+            content: '🔍';
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 18px;
+        }
+
+        /* 底部導航 */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 15, 0.9);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 1px solid var(--border-color);
+            padding: 12px 0;
+            padding-bottom: calc(12px + env(safe-area-inset-bottom));
+            z-index: 100;
+        }
+
+        .nav-items {
+            display: flex;
+            justify-content: space-around;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            padding: 8px 16px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            background: none;
+            color: var(--text-muted);
+        }
+
+        .nav-item.active {
+            color: var(--accent-blue);
+        }
+
+        .nav-item .icon {
+            font-size: 24px;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-item.active .icon {
+            transform: scale(1.1);
+        }
+
+        .nav-item .label {
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        /* Section */
+        .section {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 卡片基礎樣式 */
+        .card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 16px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .card:active {
+            transform: scale(0.98);
+            background: var(--bg-card-hover);
+        }
+
+        /* 金句卡片 */
+        .quote-card {
+            background: linear-gradient(135deg, var(--bg-card) 0%, rgba(99, 102, 241, 0.1) 100%);
+            border-left: 3px solid var(--accent-blue);
+        }
+
+        .quote-card .author {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .quote-card .avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .quote-card .author-info h4 {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .quote-card .author-info span {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .quote-card .quote-text {
+            font-size: 16px;
+            line-height: 1.7;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        /* 框架卡片 */
+        .framework-card {
+            overflow: hidden;
+        }
+
+        .framework-card .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .framework-card .card-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .framework-card .card-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+        }
+
+        .framework-card h3 {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .framework-card .subtitle {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .framework-card .arrow {
+            color: var(--text-muted);
+            transition: transform 0.3s ease;
+        }
+
+        .framework-card.expanded .arrow {
+            transform: rotate(180deg);
+        }
+
+        .framework-card .card-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .framework-card.expanded .card-content {
+            max-height: 1000px;
+        }
+
+        .framework-item {
+            display: flex;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .framework-item:last-child {
+            border-bottom: none;
+        }
+
+        .framework-item .label {
+            flex: 0 0 100px;
+            color: var(--accent-cyan);
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .framework-item .value {
+            flex: 1;
+            color: var(--text-secondary);
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        /* 路徑卡片 */
+        .path-card {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px;
+        }
+
+        .path-card .number {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .path-card .path-info {
+            flex: 1;
+        }
+
+        .path-card .path-name {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .path-card .path-end {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        /* 文章卡片 */
+        .post-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .post-card .post-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+
+        .post-card .post-number {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+
+        .post-card h3 {
+            font-size: 17px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .post-card .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .tag {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .tag.topic {
+            background: rgba(99, 102, 241, 0.15);
+            color: var(--accent-blue);
+        }
+
+        .tag.ready {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--accent-green);
+        }
+
+        .tag.pending {
+            background: rgba(251, 191, 36, 0.15);
+            color: var(--accent-yellow);
+        }
+
+        .post-card .post-preview {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .post-card .post-full {
+            display: none;
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            white-space: pre-wrap;
+            padding-top: 12px;
+            border-top: 1px solid var(--border-color);
+            margin-top: 12px;
+        }
+
+        .post-card.expanded .post-preview {
+            display: none;
+        }
+
+        .post-card.expanded .post-full {
+            display: block;
+        }
+
+        .post-card .expand-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            margin-top: 12px;
+            padding: 10px;
+            background: var(--glass);
+            border-radius: 10px;
+            color: var(--accent-blue);
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .post-card .expand-btn:hover {
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        /* 風格卡片 */
+        .style-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .style-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+        }
+
+        .style-card.style-a::before { background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple)); }
+        .style-card.style-b::before { background: linear-gradient(90deg, var(--accent-green), var(--accent-cyan)); }
+        .style-card.style-c::before { background: linear-gradient(90deg, var(--accent-yellow), var(--accent-orange)); }
+        .style-card.style-d::before { background: linear-gradient(90deg, var(--accent-pink), var(--accent-purple)); }
+        .style-card.style-e::before { background: linear-gradient(90deg, var(--accent-cyan), var(--accent-blue)); }
+        .style-card.style-f::before { background: linear-gradient(90deg, var(--accent-purple), var(--accent-pink)); }
+
+        .style-card .style-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+            padding-top: 8px;
+        }
+
+        .style-card .style-badge {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .style-card.style-a .style-badge { background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple)); }
+        .style-card.style-b .style-badge { background: linear-gradient(135deg, var(--accent-green), var(--accent-cyan)); }
+        .style-card.style-c .style-badge { background: linear-gradient(135deg, var(--accent-yellow), var(--accent-orange)); }
+        .style-card.style-d .style-badge { background: linear-gradient(135deg, var(--accent-pink), var(--accent-purple)); }
+        .style-card.style-e .style-badge { background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue)); }
+        .style-card.style-f .style-badge { background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink)); }
+
+        .style-card .style-info h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .style-card .style-type {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .style-card .style-details {
+            display: grid;
+            gap: 10px;
+        }
+
+        .style-detail-item {
+            display: flex;
+            gap: 12px;
+        }
+
+        .style-detail-item .detail-label {
+            flex: 0 0 50px;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .style-detail-item .detail-value {
+            flex: 1;
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* Section 標題 */
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 16px;
+            padding: 0 4px;
+        }
+
+        .section-title h2 {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .section-title .count {
+            background: var(--accent-blue);
+            color: white;
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* 分類標籤 */
+        .category-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            padding: 4px 0;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .category-tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .category-tab {
+            padding: 8px 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            font-size: 13px;
+            color: var(--text-secondary);
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .category-tab.active {
+            background: var(--accent-blue);
+            border-color: var(--accent-blue);
+            color: white;
+        }
+
+        /* 更新時間 */
+        .update-info {
+            text-align: center;
+            padding: 20px;
+            color: var(--text-muted);
+            font-size: 12px;
+        }
+
+        /* 顏色主題 */
+        .gradient-blue { background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(99, 102, 241, 0.05)); }
+        .gradient-purple { background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(168, 85, 247, 0.05)); }
+        .gradient-pink { background: linear-gradient(135deg, rgba(236, 72, 153, 0.2), rgba(236, 72, 153, 0.05)); }
+        .gradient-cyan { background: linear-gradient(135deg, rgba(34, 211, 238, 0.2), rgba(34, 211, 238, 0.05)); }
+        .gradient-green { background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(16, 185, 129, 0.05)); }
+        .gradient-yellow { background: linear-gradient(135deg, rgba(251, 191, 36, 0.2), rgba(251, 191, 36, 0.05)); }
+
+        .bg-blue { background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple)); }
+        .bg-green { background: linear-gradient(135deg, var(--accent-green), var(--accent-cyan)); }
+        .bg-pink { background: linear-gradient(135deg, var(--accent-pink), var(--accent-purple)); }
+        .bg-yellow { background: linear-gradient(135deg, var(--accent-yellow), var(--accent-orange)); }
+        .bg-cyan { background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue)); }
+        .bg-purple { background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink)); }
+
+        /* 複製按鈕 */
+        .copy-btn {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: var(--glass);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 16px;
+        }
+
+        .copy-btn:hover {
+            background: rgba(99, 102, 241, 0.2);
+        }
+
+        .copy-btn.copied {
+            background: rgba(16, 185, 129, 0.2);
+        }
+
+        /* Toast 提示 */
+        .toast {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-size: 14px;
+            z-index: 200;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-gradient"></div>
+
+    <div class="container">
+        <header>
+            <div class="logo">✨</div>
+            <h1>Hedda 靈感庫</h1>
+            <p>INSPIRATION LIBRARY</p>
+        </header>
+
+        <div class="search-box">
+            <input type="text" placeholder="搜尋金句、框架、風格..." id="searchInput" oninput="handleSearch(this.value)">
+        </div>
+
+        <!-- 靈感庫 Section -->
+        <div id="inspiration" class="section active">
+
+            <div class="section-title">
+                <h2>💎 金句庫</h2>
+                <span class="count">13</span>
+            </div>
+
+            <div class="category-tabs">
+                <div class="category-tab active" onclick="filterQuotes('all')">全部</div>
+                <div class="category-tab" onclick="filterQuotes('pickle')">Pickle Cat</div>
+                <div class="category-tab" onclick="filterQuotes('james')">JamesAI</div>
+                <div class="category-tab" onclick="filterQuotes('vc')">VC單兵</div>
+                <div class="category-tab" onclick="filterQuotes('other')">其他</div>
+            </div>
+
+            <div id="quotes-container">
+                <div class="card quote-card" data-author="pickle">
+                    <div class="author">
+                        <div class="avatar">🐱</div>
+                        <div class="author-info">
+                            <h4>Pickle Cat</h4>
+                            <span>@0xPickleCati</span>
+                        </div>
+                    </div>
+                    <div class="quote-text">「贏不是賺錢，是賺了錢多年後還能守住」</div>
+                    <button class="copy-btn" onclick="copyText('贏不是賺錢，是賺了錢多年後還能守住')">📋</button>
+                </div>
+
+                <div class="card quote-card" data-author="pickle">
+                    <div class="author">
+                        <div class="avatar">🐱</div>
+                        <div class="author-info">
+                            <h4>Pickle Cat</h4>
+                            <span>@0xPickleCati</span>
+                        </div>
+                    </div>
+                    <div class="quote-text">「快錢思維不只掏空錢包，更腐蝕信仰」</div>
+                    <button class="copy-btn" onclick="copyText('快錢思維不只掏空錢包，更腐蝕信仰')">📋</button>
+                </div>
+
+                <div class="card quote-card" data-author="pickle">
+                    <div class="author">
+                        <div class="avatar">🐱</div>
+                        <div class="author-info">
+                            <h4>Pickle Cat</h4>
+                            <span>@0xPickleCati</span>
+                        </div>
+                    </div>
+                    <div class="quote-text">「價格是滯後指標，行為變化才是領先訊號」</div>
+                    <button class="copy-btn" onclick="copyText('價格是滯後指標，行為變化才是領先訊號')">📋</button>
+                </div>
+
+                <div class="card quote-card" data-author="james">
+                    <div class="author">
+                        <div class="avatar bg-green">J</div>
+                        <div class="author-info">
+                            <h4>JamesAI</h4>
+                            <span>@JamesAI</span>
+                        </div>
+                    </div>
+                    <div class="quote-text">「賺錢是技能，你能學會寫代碼，就能學會賺錢」</div>
+                    <button class="copy-btn" onclick="copyText('賺錢是技能，你能學會寫代碼，就能學會賺錢')">📋</button>
+                </div>
+
+                <div class="card quote-card" data-author="james">
+                    <div class="author">
+                        <div class="avatar bg-green">J</div>
+                        <div class="author-info">
+                            <h4>JamesAI</h4>
+                            <span>@JamesAI</span>
+                        </div>
+                    </div>
+                    <div class="quote-text">「你只要開始做，就已經超過 90% 的人」</div>
+                    <button class="copy-btn" onclick="copyText('你只要開始做，就已經超過 90% 的人')">📋</button>
+                </div>
+
+                <div class="card quote-card" data-author="vc">
+                    <div class="author">
+                        <div class="avatar bg-purple">V</div>
+                        <div class="author-info">
+                            <h4>VC 單兵作者</h4>
+                            <span>精英視角</span>
+                        </div>
+                    </div>
+                    <div class="quote-text">「智力是平庸的，人品是稀缺的」</div>
+                    <button class="copy-btn" onclick="copyText('智力是平庸的，人品是稀缺的')">📋</button>
+                </div>
+
+                <div class="card quote-card" data-author="vc">
+                    <div class="author">
+                        <div class="avatar bg-purple">V</div>
+                        <div class="author-info">
+                            <h4>VC 單兵作者</h4>
+                            <span>精英視角</span>
+                        </div>
+                    </div>
+                    <div class="quote-text">「AI 抹平了體力差，但抹不平圈子差」</div>
+                    <button class="copy-btn" onclick="copyText('AI 抹平了體力差，但抹不平圈子差')">📋</button>
+                </div>
+
+                <div class="card quote-card" data-author="vc">
+                    <div class="author">
+                        <div class="avatar bg-purple">V</div>
+                        <div class="author-info">
+                            <h4>VC 單兵作者</h4>
+                            <span>精英視角</span>
+                        </div>
+                    </div>
+                    <div class="quote-text">「名氣是最廉價也最有效的保險費」</div>
+                    <button class="copy-btn" onclick="copyText('名氣是最廉價也最有效的保險費')">📋</button>
+                </div>
+
+                <div class="card quote-card" data-author="other">
+                    <div class="author">
+                        <div class="avatar bg-yellow">🌿</div>
+                        <div class="author-info">
+                            <h4>週期韭菜</h4>
+                            <span>兩週期倖存者</span>
+                        </div>
+                    </div>
+                    <div class="quote-text">「幣圈不是燒錢，是燒人」</div>
+                    <button class="copy-btn" onclick="copyText('幣圈不是燒錢，是燒人')">📋</button>
+                </div>
+
+                <div class="card quote-card" data-author="other">
+                    <div class="author">
+                        <div class="avatar bg-yellow">🌿</div>
+                        <div class="author-info">
+                            <h4>週期韭菜</h4>
+                            <span>兩週期倖存者</span>
+                        </div>
+                    </div>
+                    <div class="quote-text">「學習所有人，但別迷信任何人」</div>
+                    <button class="copy-btn" onclick="copyText('學習所有人，但別迷信任何人')">📋</button>
+                </div>
+
+                <div class="card quote-card" data-author="other">
+                    <div class="author">
+                        <div class="avatar bg-cyan">🚀</div>
+                        <div class="author-info">
+                            <h4>一人公司</h4>
+                            <span>Day1 Global</span>
+                        </div>
+                    </div>
+                    <div class="quote-text">「人 + 機器人 + AI > AI 本身」</div>
+                    <button class="copy-btn" onclick="copyText('人 + 機器人 + AI > AI 本身')">📋</button>
+                </div>
+            </div>
+
+            <div class="section-title" style="margin-top: 30px;">
+                <h2>🧠 框架庫</h2>
+            </div>
+
+            <div class="card framework-card" onclick="toggleFramework(this)">
+                <div class="card-header">
+                    <div class="card-title">
+                        <div class="card-icon bg-blue">🐱</div>
+                        <div>
+                            <h3>Pickle Cat 框架</h3>
+                            <div class="subtitle">穿越週期的底層邏輯</div>
+                        </div>
+                    </div>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="card-content">
+                    <div class="framework-item">
+                        <span class="label">三燃料模型</span>
+                        <span class="value">流動性 + 敘事 + 共識</span>
+                    </div>
+                    <div class="framework-item">
+                        <span class="label">四層價值錨定</span>
+                        <span class="value">概念、時間、行為、信仰</span>
+                    </div>
+                    <div class="framework-item">
+                        <span class="label">共識 vs 敘事</span>
+                        <span class="value">敘事吸引目光，共識留住人群</span>
+                    </div>
+                    <div class="framework-item">
+                        <span class="label">韭菜自保 5 問</span>
+                        <span class="value">圈外人？激勵衰減？日常習慣？行為>體驗？用愛發電？</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card framework-card" onclick="toggleFramework(this)">
+                <div class="card-header">
+                    <div class="card-title">
+                        <div class="card-icon bg-green">⚡</div>
+                        <div>
+                            <h3>JamesAI 框架</h3>
+                            <div class="subtitle">一天內開始賺錢</div>
+                        </div>
+                    </div>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="card-content">
+                    <div class="framework-item">
+                        <span class="label">戰場選擇</span>
+                        <span class="value">信息差 × 供需失衡 × 槓桿</span>
+                    </div>
+                    <div class="framework-item">
+                        <span class="label">三種槓桿</span>
+                        <span class="value">勞動力、資本、零邊際成本（內容/代碼）</span>
+                    </div>
+                    <div class="framework-item">
+                        <span class="label">一日行動</span>
+                        <span class="value">審計 → 調研 → 製作 → 發布</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-title" style="margin-top: 30px;">
+                <h2>💰 單兵賺錢路徑</h2>
+                <span class="count">6</span>
+            </div>
+
+            <div class="card path-card gradient-blue">
+                <div class="number bg-blue">1</div>
+                <div class="path-info">
+                    <div class="path-name">自媒體</div>
+                    <div class="path-end">→ 成為項目方喜歡的樣子</div>
+                </div>
+            </div>
+
+            <div class="card path-card gradient-purple">
+                <div class="number bg-purple">2</div>
+                <div class="path-info">
+                    <div class="path-name">Alpha Hunter</div>
+                    <div class="path-end">→ 始於技術，終於圈子</div>
+                </div>
+            </div>
+
+            <div class="card path-card gradient-cyan">
+                <div class="number bg-cyan">3</div>
+                <div class="path-info">
+                    <div class="path-name">Coder</div>
+                    <div class="path-end">→ 初階外包，高階當大科</div>
+                </div>
+            </div>
+
+            <div class="card path-card gradient-green">
+                <div class="number bg-green">4</div>
+                <div class="path-info">
+                    <div class="path-name">Trader</div>
+                    <div class="path-end">→ 規則和概率，哲學修為</div>
+                </div>
+            </div>
+
+            <div class="card path-card gradient-yellow">
+                <div class="number bg-yellow">5</div>
+                <div class="path-info">
+                    <div class="path-name">發園區盤</div>
+                    <div class="path-end">→ 最小阻力之路</div>
+                </div>
+            </div>
+
+            <div class="card path-card gradient-pink">
+                <div class="number bg-pink">6</div>
+                <div class="path-info">
+                    <div class="path-name">VC 單兵</div>
+                    <div class="path-end">→ 攢局造神 → 流動性退出</div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- 代發文 Section -->
+        <div id="posts" class="section">
+
+            <div class="section-title">
+                <h2>📝 代發文清單</h2>
+                <span class="count">3</span>
+            </div>
+
+            <div class="card post-card" onclick="togglePost(this)">
+                <div class="post-number">#01</div>
+                <h3>當 AI 學會刷卡</h3>
+                <div class="tags">
+                    <span class="tag topic">Kite × Clawdbot</span>
+                    <span class="tag ready">✅ 已寫好</span>
+                </div>
+                <div class="post-preview">最近 Clawdbot 這類本地智能體爆火，我那顆經歷了十幾年周期的老韭菜心又開始躁動了...</div>
+                <div class="post-full">最近 Clawdbot 這類本地智能體爆火，我那顆經歷了十幾年周期的老韭菜心又開始躁動了。
+
+AI 從「陪你聊天」進化到「替你做事」，這轉變看似微小，實則暗藏玄機。
+
+你想過沒有：當你的 AI 助手需要調用付費 API 時，它怎麼付錢？
+
+現在的答案是：它不能。它只能停下來喊你：「主人，幫我刷卡。」
+
+這就像請了個超級天才員工，結果他沒有工牌、沒有銀行卡、做的事還沒人簽收。你敢讓他單獨出門辦事嗎？
+
+---
+
+這就是 Kite 想解決的問題。
+
+用 x402 標準讓支付像呼吸一樣自然，用 KitePass 給每個 Agent 一張「數字身份證」，每筆交易都有鏈上回執可追蹤。
+
+簡單說：Clawdbot 是腦子，Kite 是錢包 + 工牌 + 簽收單。
+
+---
+
+回到我們熟悉的框架：每次加密破圈，都是用新方式把人聚起來。
+
+ICO 聚資金，DeFi 聚金融勞作，NFT 聚文化身份，Meme 聚情緒玩笑。
+
+下一個被聚合的，會不會是 Agent 的勞動力？
+
+當機器能自主接單、幹活、收錢、交割——那才叫真正的「共識升級」。
+
+我不知道 Kite 會不會成，但這個方向，值得盯著。</div>
+                <div class="expand-btn">
+                    <span class="expand-text">展開全文</span>
+                    <span>▼</span>
+                </div>
+                <button class="copy-btn" onclick="event.stopPropagation(); copyPost(0)">📋</button>
+            </div>
+
+            <div class="card post-card" onclick="togglePost(this)">
+                <div class="post-number">#02</div>
+                <h3>99.999% 的人覺得裝 AI 工具很可怕</h3>
+                <div class="tags">
+                    <span class="tag topic">行動 vs 等待</span>
+                    <span class="tag ready">✅ 已寫好</span>
+                </div>
+                <div class="post-preview">99.999% 的人覺得裝 AI 工具很可怕。可怕？別騙自己了，就是懶...</div>
+                <div class="post-full">99.999% 的人覺得裝 AI 工具很可怕。可怕？別騙自己了，就是懶。「我再研究一下」「等穩定再說」——這些話翻譯成白話就是：我不想動，但我不想承認。
+
+我為了跑 Clawdbot 買了一台 Mac mini，有人可能覺得傻。傻嗎？那些笑我的人，連第一步都沒踏出去。他們的「聰明」就是永遠在等，等到機會被別人吃乾抹淨。
+
+這個時代不獎勵聰明人，獎勵的是動手的人。你在研究，別人已經在用 AI 賺錢了。繼續等吧，沒人攔你。</div>
+                <div class="expand-btn">
+                    <span class="expand-text">展開全文</span>
+                    <span>▼</span>
+                </div>
+                <button class="copy-btn" onclick="event.stopPropagation(); copyPost(1)">📋</button>
+            </div>
+
+            <div class="card post-card">
+                <div class="post-number">#03</div>
+                <h3>我下載 Clawdbot 遇到的問題</h3>
+                <div class="tags">
+                    <span class="tag topic">安裝經驗</span>
+                    <span class="tag pending">📝 待寫</span>
+                </div>
+                <div class="post-preview">等待 Hedda 提供具體遇到的問題...</div>
+            </div>
+
+        </div>
+
+        <!-- 風格庫 Section -->
+        <div id="styles" class="section">
+
+            <div class="section-title">
+                <h2>✍️ 寫文風格庫</h2>
+                <span class="count">6</span>
+            </div>
+
+            <div class="card style-card style-a">
+                <div class="style-header">
+                    <div class="style-badge">A</div>
+                    <div class="style-info">
+                        <h3>Pickle Cat</h3>
+                        <div class="style-type">史詩敘事型</div>
+                    </div>
+                </div>
+                <div class="style-details">
+                    <div class="style-detail-item">
+                        <span class="detail-label">身份</span>
+                        <span class="detail-value">13 年週期倖存者</span>
+                    </div>
+                    <div class="style-detail-item">
+                        <span class="detail-label">語氣</span>
+                        <span class="detail-value">自嘲帶智慧、歷史視角宏大、敢講真話</span>
+                    </div>
+                    <div class="style-detail-item">
+                        <span class="detail-label">結構</span>
+                        <span class="detail-value">經歷開場 → 顛覆認知 → 案例佐證 → 框架整理 → 哲學昇華</span>
+                    </div>
+                    <div class="style-detail-item">
+                        <span class="detail-label">適合</span>
+                        <span class="detail-value">深度長文、建立權威</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card style-card style-b">
+                <div class="style-header">
+                    <div class="style-badge">B</div>
+                    <div class="style-info">
+                        <h3>JamesAI</h3>
+                        <div class="style-type">實戰清單型</div>
+                    </div>
+                </div>
+                <div class="style-details">
+                    <div class="style-detail-item">
+                        <span class="detail-label">身份</span>
+                        <span class="detail-value">實戰派行動主義者</span>
+                    </div>
+                    <div class="style-detail-item">
+                        <span class="detail-label">語氣</span>
+                        <span class="detail-value">簡單粗暴、不給藉口、強調做比想重要</span>
+                    </div>
+                    <div class="style-detail-item">
+                        <span class="detail-label">結構</span>
+                        <span class="detail-value">觀點直砸 → 執行步驟 → 代價 → 行動清單 → 踹一腳</span>
+                    </div>
+                    <div class="style-detail-item">
+                        <span class="detail-label">適合</span>
+                        <span class="detail-value">短文、教學、激勵行動</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card style-card style-c">
+                <div class="style-header">
+                    <div class="style-badge">C</div>
+                    <div class="style-info">
+                        <h3>週期韭菜</h3>
+                        <div class="style-type">吐槽總結型</div>
+                    </div>
+                </div>
+                <div class="style-details">
+                    <div class="style-detail-item">
+                        <span class="detail-label">身份</span>
+                        <span class="detail-value">兩個週期倖存者</span>
+                    </div>
+                    <div class="style-detail-item">
+                        <span class="detail-label">語氣</span>
+                        <span class="detail-value">自嘲 + 毒舌、江湖氣、先捧再拆</span>
+                    </div>
+                    <div class="style-detail-item">
+                        <span class="detail-label">結構</span>
+                        <span class="detail-value">先捧原文 → 幾條法則 → 夾帶私貨 → 真誠祝福</span>
+                    </div>
+                    <div class="style-detail-item">
+                        <span class="detail-label">適合</span>
+                        <span class="detail-value">評論、回應、表達觀點</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card style-card style-d">
+                <div class="style-header">
+                    <div class="style-badge">D</div>
+                    <div class="style-info">
+                        <h3>Hedda 本人</h3>
+                        <div class="style-type">嗆辣打臉型</div>
+                    </div>
+                </div>
+                <div class="style-details">
+                    <div class="style-detail-item">
+                        <span class="detail-label">身份</span>
+                        <span class="detail-value">幣圈老手 + AI 實踐者</span>
+                    </div>
+                    <div class="style-detail-item">
+                        <span class="detail-label">語氣</span>
+                        <span class="detail-value">嗆辣直白、戳破謊言、反諷挑釁</span>
+                    </div>
+                    <div class="style-detail-item">
+                        <span class="detail-label">結構</span>
+                        <span class="detail-value">打臉開場 → 行動證明 → 反諷 → 挑釁收尾</span>
+                    </div>
+                    <div class="style-detail-item">
+                        <span class="detail-label">適合</span>
+                        <span class="detail-value">短貼、引戰、態度輸出</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card style-card style-e">
+                <div class="style-header">
+                    <div class="style-badge">E</div>
+                    <div class="style-info">
+                        <h3>Star / Day1</h3>
+                        <div class="style-type">趨勢報導型</div>
+                    </div>
+                </div>
+                <div class="style-details">
+                    <div class="style-detail-item">
+                        <span class="detail-label">身份</span>
+                        <span class="detail-value">趨勢觀察者、訪談整理者</span>
+                    </div>
+                    <div class="style-detail-item">
+                        <span class="detail-label">語氣</span>
+                        <span class="detail-value">報導式、客觀有觀點、數據引入</span>
+                    </div>
+                    <div class="style-detail-item">
+                        <span class="detail-label">結構</span>
+                        <span class="detail-value">趨勢數據開場 → 分段小標題 → 引用原話 → 留白思考</span>
+                    </div>
+                    <div class="style-detail-item">
+                        <span class="detail-label">適合</span>
+                        <span class="detail-value">趨勢分析、訪談整理</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card style-card style-f">
+                <div class="style-header">
+                    <div class="style-badge">F</div>
+                    <div class="style-info">
+                        <h3>VC 單兵作者</h3>
+                        <div class="style-type">冷峻解剖型</div>
+                    </div>
+                </div>
+                <div class="style-details">
+                    <div class="style-detail-item">
+                        <span class="detail-label">身份</span>
+                        <span class="detail-value">精英視角、深度拆解者</span>
+                    </div>
+                    <div class="style-detail-item">
+                        <span class="detail-label">語氣</span>
+                        <span class="detail-value">冷峻、解剖式、不帶情緒但有鋒芒</span>
+                    </div>
+                    <div class="style-detail-item">
+                        <span class="detail-label">結構</span>
+                        <span class="detail-value">定義框架 → 分段編號 → 邏輯遞進 → 哲學昇華</span>
+                    </div>
+                    <div class="style-detail-item">
+                        <span class="detail-label">適合</span>
+                        <span class="detail-value">深度拆解、精英視角、講底層邏輯</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="update-info">
+            最後更新：2026-01-28 14:30<br>
+            Made with 🩵 for Hedda
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="toast">已複製到剪貼簿</div>
+
+    <!-- 底部導航 -->
+    <nav class="bottom-nav">
+        <div class="nav-items">
+            <button class="nav-item active" onclick="showSection('inspiration')">
+                <span class="icon">💡</span>
+                <span class="label">靈感</span>
+            </button>
+            <button class="nav-item" onclick="showSection('posts')">
+                <span class="icon">📝</span>
+                <span class="label">代發文</span>
+            </button>
+            <button class="nav-item" onclick="showSection('styles')">
+                <span class="icon">✍️</span>
+                <span class="label">風格</span>
+            </button>
+        </div>
+    </nav>
+
+    <script>
+        const posts = [
+            `最近 Clawdbot 這類本地智能體爆火，我那顆經歷了十幾年周期的老韭菜心又開始躁動了。
+
+AI 從「陪你聊天」進化到「替你做事」，這轉變看似微小，實則暗藏玄機。
+
+你想過沒有：當你的 AI 助手需要調用付費 API 時，它怎麼付錢？
+
+現在的答案是：它不能。它只能停下來喊你：「主人，幫我刷卡。」
+
+這就像請了個超級天才員工，結果他沒有工牌、沒有銀行卡、做的事還沒人簽收。你敢讓他單獨出門辦事嗎？
+
+---
+
+這就是 Kite 想解決的問題。
+
+用 x402 標準讓支付像呼吸一樣自然，用 KitePass 給每個 Agent 一張「數字身份證」，每筆交易都有鏈上回執可追蹤。
+
+簡單說：Clawdbot 是腦子，Kite 是錢包 + 工牌 + 簽收單。
+
+---
+
+回到我們熟悉的框架：每次加密破圈，都是用新方式把人聚起來。
+
+ICO 聚資金，DeFi 聚金融勞作，NFT 聚文化身份，Meme 聚情緒玩笑。
+
+下一個被聚合的，會不會是 Agent 的勞動力？
+
+當機器能自主接單、幹活、收錢、交割——那才叫真正的「共識升級」。
+
+我不知道 Kite 會不會成，但這個方向，值得盯著。`,
+            `99.999% 的人覺得裝 AI 工具很可怕。可怕？別騙自己了，就是懶。「我再研究一下」「等穩定再說」——這些話翻譯成白話就是：我不想動，但我不想承認。
+
+我為了跑 Clawdbot 買了一台 Mac mini，有人可能覺得傻。傻嗎？那些笑我的人，連第一步都沒踏出去。他們的「聰明」就是永遠在等，等到機會被別人吃乾抹淨。
+
+這個時代不獎勵聰明人，獎勵的是動手的人。你在研究，別人已經在用 AI 賺錢了。繼續等吧，沒人攔你。`
+        ];
+
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+
+        function toggleFramework(element) {
+            element.classList.toggle('expanded');
+        }
+
+        function togglePost(element) {
+            element.classList.toggle('expanded');
+            const btn = element.querySelector('.expand-text');
+            if (btn) {
+                btn.textContent = element.classList.contains('expanded') ? '收起全文' : '展開全文';
+            }
+        }
+
+        function filterQuotes(author) {
+            document.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+
+            document.querySelectorAll('.quote-card').forEach(card => {
+                if (author === 'all' || card.dataset.author === author) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        function copyText(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('已複製金句');
+                event.currentTarget.classList.add('copied');
+                event.currentTarget.textContent = '✓';
+                setTimeout(() => {
+                    event.currentTarget.classList.remove('copied');
+                    event.currentTarget.textContent = '📋';
+                }, 2000);
+            });
+            event.stopPropagation();
+        }
+
+        function copyPost(index) {
+            navigator.clipboard.writeText(posts[index]).then(() => {
+                showToast('已複製全文');
+            });
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2000);
+        }
+
+        function handleSearch(query) {
+            query = query.toLowerCase();
+            document.querySelectorAll('.card').forEach(card => {
+                const text = card.textContent.toLowerCase();
+                card.style.display = text.includes(query) ? 'block' : 'none';
+            });
+        }
+    </script>
+</body>
+</html>
