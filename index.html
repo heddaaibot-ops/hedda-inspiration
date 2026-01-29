@@ -166,16 +166,20 @@
         .search-box input {
             width: 100%;
             padding: 16px 20px 16px 50px;
-            background: var(--glass-bg);
+            background: rgba(20, 20, 28, 0.8);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: 16px;
+            border: none;
+            border-radius: 18px;
             color: var(--text-primary);
             font-family: var(--font-body);
             font-size: 15px;
             outline: none;
             transition: all 0.3s ease;
+            box-shadow:
+                0 2px 4px rgba(0, 0, 0, 0.1),
+                0 8px 16px rgba(0, 0, 0, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
         }
 
         .search-box input::placeholder {
@@ -183,8 +187,11 @@
         }
 
         .search-box input:focus {
-            border-color: var(--accent-gold);
-            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15), 0 8px 32px rgba(0, 0, 0, 0.3);
+            box-shadow:
+                0 4px 8px rgba(0, 0, 0, 0.15),
+                0 12px 24px rgba(0, 0, 0, 0.2),
+                0 0 40px rgba(212, 175, 55, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08);
         }
 
         .search-box::before {
@@ -274,18 +281,24 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Glass Card Base */
+        /* Glass Card Base - Soft Shadow Style (Apple-like) */
         .card {
-            background: var(--glass-bg);
+            background: rgba(20, 20, 28, 0.8);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border-radius: 20px;
-            padding: 20px;
+            border-radius: 24px;
+            padding: 22px;
             margin-bottom: 16px;
-            border: 1px solid var(--glass-border);
-            transition: all 0.3s ease;
+            border: none;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             position: relative;
             overflow: hidden;
+            /* Multi-layer soft shadows */
+            box-shadow:
+                0 2px 4px rgba(0, 0, 0, 0.1),
+                0 8px 16px rgba(0, 0, 0, 0.15),
+                0 16px 32px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
         }
 
         .card::before {
@@ -295,24 +308,44 @@
             left: 0;
             right: 0;
             height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
         }
 
         .card:hover {
-            background: var(--glass-hover);
-            border-color: rgba(212, 175, 55, 0.2);
-            transform: translateY(-2px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            background: rgba(25, 25, 35, 0.9);
+            transform: translateY(-4px);
+            box-shadow:
+                0 4px 8px rgba(0, 0, 0, 0.1),
+                0 12px 24px rgba(0, 0, 0, 0.2),
+                0 24px 48px rgba(0, 0, 0, 0.15),
+                0 0 60px rgba(212, 175, 55, 0.08),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08);
         }
 
         .card:active {
-            transform: scale(0.98);
+            transform: scale(0.98) translateY(-2px);
         }
 
-        /* Quote Card */
+        /* Quote Card - Soft gold accent */
         .quote-card {
-            border-left: 3px solid var(--accent-gold);
-            background: linear-gradient(135deg, var(--glass-bg) 0%, rgba(212, 175, 55, 0.03) 100%);
+            border-left: none;
+            background: linear-gradient(135deg, rgba(20, 20, 28, 0.85) 0%, rgba(212, 175, 55, 0.05) 100%);
+            box-shadow:
+                0 2px 4px rgba(0, 0, 0, 0.1),
+                0 8px 16px rgba(0, 0, 0, 0.15),
+                0 16px 32px rgba(0, 0, 0, 0.1),
+                inset 4px 0 0 var(--accent-gold),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+
+        .quote-card:hover {
+            box-shadow:
+                0 4px 8px rgba(0, 0, 0, 0.1),
+                0 12px 24px rgba(0, 0, 0, 0.2),
+                0 24px 48px rgba(0, 0, 0, 0.15),
+                0 0 40px rgba(212, 175, 55, 0.12),
+                inset 4px 0 0 var(--accent-gold-light),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08);
         }
 
         .quote-card .author {
@@ -396,9 +429,9 @@
 
         .category-tab {
             padding: 10px 18px;
-            background: var(--glass-bg);
+            background: rgba(30, 30, 40, 0.6);
             backdrop-filter: blur(10px);
-            border: 1px solid var(--glass-border);
+            border: none;
             border-radius: 25px;
             font-family: var(--font-body);
             font-size: 12px;
@@ -407,15 +440,17 @@
             white-space: nowrap;
             cursor: pointer;
             transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
         }
 
         .category-tab:hover {
-            border-color: rgba(212, 175, 55, 0.3);
+            background: rgba(40, 40, 55, 0.8);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
 
         .category-tab.active {
             background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-dark));
-            border-color: var(--accent-gold);
+            border: none;
             color: #000;
             font-weight: 600;
             box-shadow: 0 4px 20px rgba(212, 175, 55, 0.3);
@@ -447,7 +482,8 @@
             align-items: center;
             justify-content: center;
             font-size: 22px;
-            border: 1px solid var(--glass-border);
+            border: none;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
 
         .framework-card h3 {
@@ -590,21 +626,24 @@
         }
 
         .tag.topic {
-            background: rgba(139, 92, 246, 0.15);
+            background: rgba(139, 92, 246, 0.2);
             color: var(--accent-purple);
-            border: 1px solid rgba(139, 92, 246, 0.3);
+            border: none;
+            box-shadow: 0 2px 6px rgba(139, 92, 246, 0.15);
         }
 
         .tag.ready {
-            background: rgba(16, 185, 129, 0.15);
+            background: rgba(16, 185, 129, 0.2);
             color: var(--accent-green);
-            border: 1px solid rgba(16, 185, 129, 0.3);
+            border: none;
+            box-shadow: 0 2px 6px rgba(16, 185, 129, 0.15);
         }
 
         .tag.pending {
-            background: rgba(251, 191, 36, 0.15);
+            background: rgba(251, 191, 36, 0.2);
             color: var(--accent-gold-light);
-            border: 1px solid rgba(251, 191, 36, 0.3);
+            border: none;
+            box-shadow: 0 2px 6px rgba(251, 191, 36, 0.15);
         }
 
         .post-card .post-preview {
@@ -640,8 +679,8 @@
             gap: 8px;
             margin-top: 14px;
             padding: 12px;
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
+            background: rgba(30, 30, 40, 0.6);
+            border: none;
             border-radius: 12px;
             color: var(--accent-gold);
             font-size: 12px;
@@ -649,11 +688,12 @@
             font-family: var(--font-body);
             cursor: pointer;
             transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
         }
 
         .post-card .expand-btn:hover {
-            background: rgba(212, 175, 55, 0.1);
-            border-color: rgba(212, 175, 55, 0.3);
+            background: rgba(212, 175, 55, 0.15);
+            box-shadow: 0 4px 16px rgba(212, 175, 55, 0.2);
         }
 
         /* Style Card */
@@ -751,27 +791,28 @@
             right: 16px;
             width: 38px;
             height: 38px;
-            border-radius: 10px;
-            background: var(--glass-bg);
+            border-radius: 12px;
+            background: rgba(30, 30, 40, 0.7);
             backdrop-filter: blur(10px);
-            border: 1px solid var(--glass-border);
+            border: none;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             transition: all 0.3s ease;
             font-size: 16px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
         }
 
         .copy-btn:hover {
-            background: rgba(212, 175, 55, 0.15);
-            border-color: rgba(212, 175, 55, 0.4);
-            transform: scale(1.05);
+            background: rgba(212, 175, 55, 0.2);
+            transform: scale(1.08);
+            box-shadow: 0 4px 16px rgba(212, 175, 55, 0.25);
         }
 
         .copy-btn.copied {
-            background: rgba(16, 185, 129, 0.2);
-            border-color: rgba(16, 185, 129, 0.4);
+            background: rgba(16, 185, 129, 0.25);
+            box-shadow: 0 4px 16px rgba(16, 185, 129, 0.25);
         }
 
         /* Color Backgrounds */
