@@ -25,12 +25,12 @@
             --accent-gold-light: #F4D03F;
             --accent-gold-dark: #B8860B;
 
-            /* Supporting Colors */
-            --accent-purple: #8B5CF6;
-            --accent-cyan: #22D3EE;
-            --accent-pink: #EC4899;
-            --accent-green: #10B981;
-            --accent-orange: #F97316;
+            /* All accent colors unified to Gold */
+            --accent-purple: #D4AF37;
+            --accent-cyan: #D4AF37;
+            --accent-pink: #D4AF37;
+            --accent-green: #D4AF37;
+            --accent-orange: #D4AF37;
 
             /* Text Colors */
             --text-primary: #FFFFFF;
@@ -58,7 +58,7 @@
             overflow-x: hidden;
         }
 
-        /* Animated Background */
+        /* Animated Background - Pure Gold */
         .bg-animated {
             position: fixed;
             top: 0;
@@ -67,9 +67,9 @@
             bottom: 0;
             background:
                 radial-gradient(ellipse at 10% 10%, rgba(212, 175, 55, 0.15) 0%, transparent 40%),
-                radial-gradient(ellipse at 90% 20%, rgba(139, 92, 246, 0.1) 0%, transparent 40%),
-                radial-gradient(ellipse at 50% 80%, rgba(236, 72, 153, 0.08) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 90%, rgba(34, 211, 238, 0.06) 0%, transparent 40%);
+                radial-gradient(ellipse at 90% 20%, rgba(244, 208, 63, 0.08) 0%, transparent 40%),
+                radial-gradient(ellipse at 50% 80%, rgba(184, 134, 11, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 90%, rgba(212, 175, 55, 0.06) 0%, transparent 40%);
             pointer-events: none;
             z-index: 0;
             animation: bgPulse 15s ease-in-out infinite;
@@ -626,24 +626,24 @@
         }
 
         .tag.topic {
-            background: rgba(139, 92, 246, 0.2);
-            color: var(--accent-purple);
+            background: rgba(212, 175, 55, 0.15);
+            color: var(--accent-gold);
             border: none;
-            box-shadow: 0 2px 6px rgba(139, 92, 246, 0.15);
+            box-shadow: 0 2px 6px rgba(212, 175, 55, 0.15);
         }
 
         .tag.ready {
-            background: rgba(16, 185, 129, 0.2);
-            color: var(--accent-green);
+            background: rgba(212, 175, 55, 0.25);
+            color: var(--accent-gold-light);
             border: none;
-            box-shadow: 0 2px 6px rgba(16, 185, 129, 0.15);
+            box-shadow: 0 2px 6px rgba(212, 175, 55, 0.2);
         }
 
         .tag.pending {
-            background: rgba(251, 191, 36, 0.2);
-            color: var(--accent-gold-light);
+            background: rgba(184, 134, 11, 0.2);
+            color: var(--accent-gold-dark);
             border: none;
-            box-shadow: 0 2px 6px rgba(251, 191, 36, 0.15);
+            box-shadow: 0 2px 6px rgba(184, 134, 11, 0.15);
         }
 
         .post-card .post-preview {
@@ -711,12 +711,12 @@
             height: 3px;
         }
 
-        .style-card.style-a::after { background: linear-gradient(90deg, var(--accent-gold), var(--accent-purple)); }
-        .style-card.style-b::after { background: linear-gradient(90deg, var(--accent-green), var(--accent-cyan)); }
-        .style-card.style-c::after { background: linear-gradient(90deg, var(--accent-gold-light), var(--accent-orange)); }
-        .style-card.style-d::after { background: linear-gradient(90deg, var(--accent-pink), var(--accent-purple)); }
-        .style-card.style-e::after { background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple)); }
-        .style-card.style-f::after { background: linear-gradient(90deg, var(--accent-purple), var(--accent-pink)); }
+        .style-card.style-a::after { background: linear-gradient(90deg, var(--accent-gold-light), var(--accent-gold)); }
+        .style-card.style-b::after { background: linear-gradient(90deg, var(--accent-gold), var(--accent-gold-dark)); }
+        .style-card.style-c::after { background: linear-gradient(90deg, var(--accent-gold-light), var(--accent-gold)); }
+        .style-card.style-d::after { background: linear-gradient(90deg, var(--accent-gold), var(--accent-gold-light)); }
+        .style-card.style-e::after { background: linear-gradient(90deg, var(--accent-gold-dark), var(--accent-gold)); }
+        .style-card.style-f::after { background: linear-gradient(90deg, var(--accent-gold), var(--accent-gold-dark)); }
 
         .style-card .style-header {
             display: flex;
@@ -739,12 +739,12 @@
             color: #000;
         }
 
-        .style-card.style-a .style-badge { background: linear-gradient(135deg, var(--accent-gold), var(--accent-purple)); }
-        .style-card.style-b .style-badge { background: linear-gradient(135deg, var(--accent-green), var(--accent-cyan)); }
-        .style-card.style-c .style-badge { background: linear-gradient(135deg, var(--accent-gold-light), var(--accent-orange)); }
-        .style-card.style-d .style-badge { background: linear-gradient(135deg, var(--accent-pink), var(--accent-purple)); }
-        .style-card.style-e .style-badge { background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple)); }
-        .style-card.style-f .style-badge { background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink)); }
+        .style-card.style-a .style-badge { background: linear-gradient(135deg, var(--accent-gold-light), var(--accent-gold)); }
+        .style-card.style-b .style-badge { background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-dark)); }
+        .style-card.style-c .style-badge { background: linear-gradient(135deg, var(--accent-gold-light), var(--accent-gold)); }
+        .style-card.style-d .style-badge { background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-light)); }
+        .style-card.style-e .style-badge { background: linear-gradient(135deg, var(--accent-gold-dark), var(--accent-gold)); }
+        .style-card.style-f .style-badge { background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-dark)); }
 
         .style-card .style-info h3 {
             font-family: var(--font-heading);
@@ -811,24 +811,24 @@
         }
 
         .copy-btn.copied {
-            background: rgba(16, 185, 129, 0.25);
-            box-shadow: 0 4px 16px rgba(16, 185, 129, 0.25);
+            background: rgba(212, 175, 55, 0.35);
+            box-shadow: 0 4px 16px rgba(212, 175, 55, 0.25);
         }
 
-        /* Color Backgrounds */
+        /* Color Backgrounds - All Gold */
         .bg-gold { background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-dark)); }
-        .bg-purple { background: linear-gradient(135deg, var(--accent-purple), #6D28D9); }
-        .bg-cyan { background: linear-gradient(135deg, var(--accent-cyan), #0891B2); }
-        .bg-green { background: linear-gradient(135deg, var(--accent-green), #059669); }
-        .bg-pink { background: linear-gradient(135deg, var(--accent-pink), #BE185D); }
-        .bg-orange { background: linear-gradient(135deg, var(--accent-orange), #EA580C); }
+        .bg-purple { background: linear-gradient(135deg, var(--accent-gold-light), var(--accent-gold)); }
+        .bg-cyan { background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-dark)); }
+        .bg-green { background: linear-gradient(135deg, var(--accent-gold-dark), var(--accent-gold)); }
+        .bg-pink { background: linear-gradient(135deg, var(--accent-gold-light), var(--accent-gold)); }
+        .bg-orange { background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-light)); }
 
         .gradient-gold { background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(212, 175, 55, 0.02)); }
-        .gradient-purple { background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(139, 92, 246, 0.02)); }
-        .gradient-cyan { background: linear-gradient(135deg, rgba(34, 211, 238, 0.1), rgba(34, 211, 238, 0.02)); }
-        .gradient-green { background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.02)); }
-        .gradient-pink { background: linear-gradient(135deg, rgba(236, 72, 153, 0.1), rgba(236, 72, 153, 0.02)); }
-        .gradient-orange { background: linear-gradient(135deg, rgba(249, 115, 22, 0.1), rgba(249, 115, 22, 0.02)); }
+        .gradient-purple { background: linear-gradient(135deg, rgba(244, 208, 63, 0.1), rgba(244, 208, 63, 0.02)); }
+        .gradient-cyan { background: linear-gradient(135deg, rgba(212, 175, 55, 0.08), rgba(212, 175, 55, 0.02)); }
+        .gradient-green { background: linear-gradient(135deg, rgba(184, 134, 11, 0.1), rgba(184, 134, 11, 0.02)); }
+        .gradient-pink { background: linear-gradient(135deg, rgba(244, 208, 63, 0.08), rgba(244, 208, 63, 0.02)); }
+        .gradient-orange { background: linear-gradient(135deg, rgba(212, 175, 55, 0.12), rgba(212, 175, 55, 0.02)); }
 
         /* Update Info */
         .update-info {
@@ -959,7 +959,7 @@
 
                 <div class="card quote-card" data-author="james">
                     <div class="author">
-                        <div class="avatar" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.3), rgba(16, 185, 129, 0.1)); border-color: rgba(16, 185, 129, 0.3);">J</div>
+                        <div class="avatar" style="background: linear-gradient(135deg, rgba(184, 134, 11, 0.3), rgba(184, 134, 11, 0.1)); border-color: rgba(184, 134, 11, 0.3);">J</div>
                         <div class="author-info">
                             <h4>JAMESAI</h4>
                             <span>@JamesAI</span>
@@ -971,7 +971,7 @@
 
                 <div class="card quote-card" data-author="james">
                     <div class="author">
-                        <div class="avatar" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.3), rgba(16, 185, 129, 0.1)); border-color: rgba(16, 185, 129, 0.3);">J</div>
+                        <div class="avatar" style="background: linear-gradient(135deg, rgba(184, 134, 11, 0.3), rgba(184, 134, 11, 0.1)); border-color: rgba(184, 134, 11, 0.3);">J</div>
                         <div class="author-info">
                             <h4>JAMESAI</h4>
                             <span>@JamesAI</span>
@@ -983,7 +983,7 @@
 
                 <div class="card quote-card" data-author="vc">
                     <div class="author">
-                        <div class="avatar" style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.3), rgba(139, 92, 246, 0.1)); border-color: rgba(139, 92, 246, 0.3);">V</div>
+                        <div class="avatar" style="background: linear-gradient(135deg, rgba(244, 208, 63, 0.3), rgba(244, 208, 63, 0.1)); border-color: rgba(244, 208, 63, 0.3);">V</div>
                         <div class="author-info">
                             <h4>VC 單兵作者</h4>
                             <span>精英視角</span>
@@ -995,7 +995,7 @@
 
                 <div class="card quote-card" data-author="vc">
                     <div class="author">
-                        <div class="avatar" style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.3), rgba(139, 92, 246, 0.1)); border-color: rgba(139, 92, 246, 0.3);">V</div>
+                        <div class="avatar" style="background: linear-gradient(135deg, rgba(244, 208, 63, 0.3), rgba(244, 208, 63, 0.1)); border-color: rgba(244, 208, 63, 0.3);">V</div>
                         <div class="author-info">
                             <h4>VC 單兵作者</h4>
                             <span>精英視角</span>
@@ -1007,7 +1007,7 @@
 
                 <div class="card quote-card" data-author="vc">
                     <div class="author">
-                        <div class="avatar" style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.3), rgba(139, 92, 246, 0.1)); border-color: rgba(139, 92, 246, 0.3);">V</div>
+                        <div class="avatar" style="background: linear-gradient(135deg, rgba(244, 208, 63, 0.3), rgba(244, 208, 63, 0.1)); border-color: rgba(244, 208, 63, 0.3);">V</div>
                         <div class="author-info">
                             <h4>VC 單兵作者</h4>
                             <span>精英視角</span>
@@ -1019,7 +1019,7 @@
 
                 <div class="card quote-card" data-author="other">
                     <div class="author">
-                        <div class="avatar" style="background: linear-gradient(135deg, rgba(249, 115, 22, 0.3), rgba(249, 115, 22, 0.1)); border-color: rgba(249, 115, 22, 0.3);">🌿</div>
+                        <div class="avatar" style="background: linear-gradient(135deg, rgba(212, 175, 55, 0.3), rgba(212, 175, 55, 0.1)); border-color: rgba(212, 175, 55, 0.3);">🌿</div>
                         <div class="author-info">
                             <h4>週期韭菜</h4>
                             <span>兩週期倖存者</span>
@@ -1031,7 +1031,7 @@
 
                 <div class="card quote-card" data-author="other">
                     <div class="author">
-                        <div class="avatar" style="background: linear-gradient(135deg, rgba(249, 115, 22, 0.3), rgba(249, 115, 22, 0.1)); border-color: rgba(249, 115, 22, 0.3);">🌿</div>
+                        <div class="avatar" style="background: linear-gradient(135deg, rgba(212, 175, 55, 0.3), rgba(212, 175, 55, 0.1)); border-color: rgba(212, 175, 55, 0.3);">🌿</div>
                         <div class="author-info">
                             <h4>週期韭菜</h4>
                             <span>兩週期倖存者</span>
@@ -1043,7 +1043,7 @@
 
                 <div class="card quote-card" data-author="other">
                     <div class="author">
-                        <div class="avatar" style="background: linear-gradient(135deg, rgba(34, 211, 238, 0.3), rgba(34, 211, 238, 0.1)); border-color: rgba(34, 211, 238, 0.3);">🚀</div>
+                        <div class="avatar" style="background: linear-gradient(135deg, rgba(212, 175, 55, 0.3), rgba(212, 175, 55, 0.1)); border-color: rgba(212, 175, 55, 0.3);">🚀</div>
                         <div class="author-info">
                             <h4>一人公司</h4>
                             <span>Day1 Global</span>
